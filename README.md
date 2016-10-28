@@ -7,8 +7,10 @@ Dawn time is the only positional integer argument. 5 by default.
 ### How to use
 
 > python seek_dev_nighters.py   
+
 Find all users made an attempt between 12 AM and 5 AM   
 
 > python seek_dev_nighters.py 6   
+
 Find all users made an attempt between 12 AM and 6 AM   
 
