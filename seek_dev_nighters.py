@@ -57,7 +57,7 @@ def get_local_time(record):
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('dawn_time', action='store', type='int',
+    parser.add_argument('dawn_time', action='store', type=int,
                         help='the time you want to consider the end of the night')
     return parser.parse_args()
 
