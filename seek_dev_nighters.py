@@ -11,7 +11,12 @@ def load_attempts():  # Currently, some attempts are lost because API only provi
     """
     numeration_shift = 1
     base = 'https://devman.org/api/challenges/solution_attempts/'
-    base_response_json = requests.get(base).json()
+    base_response = requests.get(base)
+    try:
+        base_response.raise_for_status()
+    except requests.HTTPError:
+        return None
+    base_response_json = base_response.json()
     number_of_pages = base_response_json['number_of_pages']
     for page in range(numeration_shift, number_of_pages + numeration_shift):
         payload = {'page': page}
@@ -61,6 +66,9 @@ if __name__ == '__main__':
     arguments = parse_arguments()
     dawn_time = arguments.dawn_time
     attempts = load_attempts()
+    if attempts is None:
+        print('There was a problem with your request.')
+        raise SystemExit
     owl_generator = get_owls(attempts, dawn_time)
     unique_owls = set(list(owl_generator))
     print(unique_owls)
