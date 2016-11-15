@@ -52,14 +52,14 @@ def get_local_time(record):
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('dawn_time', action='store', default=5,
+    parser.add_argument('dawn_time', action='store', type='int',
                         help='the time you want to consider the end of the night')
     return parser.parse_args()
 
 
 if __name__ == '__main__':
     arguments = parse_arguments()
-    dawn_time = int(arguments.dawn_time)
+    dawn_time = arguments.dawn_time
     attempts = load_attempts()
     owl_generator = get_owls(attempts, dawn_time)
     unique_owls = set(list(owl_generator))
