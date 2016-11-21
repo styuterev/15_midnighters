@@ -12,9 +12,7 @@ def load_attempts():  # Currently, some attempts are lost because API only provi
     numeration_shift = 1
     base = 'https://devman.org/api/challenges/solution_attempts/'
     base_response = requests.get(base)
-    try:
-        base_response.raise_for_status()
-    except requests.HTTPError:
+    if base_response.status_code != requests.codes.ok:
         return None
     base_response_json = base_response.json()
     number_of_pages = base_response_json['number_of_pages']
@@ -42,11 +40,6 @@ def get_owls(records, dawn_time=5):
 
 
 def get_local_time(record):
-    """
-    From a given attempt record, gets a local time of the attempt,
-    based on the site's time and user's timezone.
-    :returns local time of the attempt
-    """
     if record['timestamp'] is None or record['timezone'] is None:
         return None
     naive_time = datetime.datetime.utcfromtimestamp(record['timestamp'])
